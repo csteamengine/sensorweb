@@ -1,15 +1,20 @@
 package com.se491.sensorweb.Controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
 import com.se491.sensorweb.Entity.EchoRequest;
+import com.se491.sensorweb.HomeNode.HomeNode;
 import com.se491.sensorweb.Service.EchoService;
+import com.se491.sensorweb.Service.HomeNodeService;
 import com.se491.sensorweb.Service.UserService;
 import com.se491.sensorweb.User.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.xml.ws.Response;
 import java.io.IOException;
+import java.util.List;
 
 @RestController
 public class HomeController {
@@ -19,6 +24,37 @@ public class HomeController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private HomeNodeService homeNodeService;
+
+    /**
+     *
+     * Gets list of all users.
+     *
+     * @return list of all users
+     */
+    @RequestMapping(method = RequestMethod.GET, value = "/users", produces = "application/json")
+    public ResponseEntity getUsers(){
+        //TODO get all users into json.
+        List<User> users = this.userService.getAllUsers();
+
+        return ResponseEntity.ok(users);
+    }
+
+    /**
+     *
+     * Gets list of all home nodes.
+     *
+     * @return list of all home nodes
+     */
+    @RequestMapping(method = RequestMethod.GET, value = "/homenodes", produces = "application/json")
+    public ResponseEntity getHomeNodes(){
+        //TODO get all users into json.
+        List<HomeNode> homeNodes = this.homeNodeService.getAllHomeNodes();
+
+        return ResponseEntity.ok(homeNodes);
+    }
 
     /**
      * Gets user by id

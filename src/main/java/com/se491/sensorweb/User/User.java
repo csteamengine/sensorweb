@@ -4,6 +4,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 @Entity // This tells Hibernate to make a table out of this class
 public class User {
@@ -32,6 +35,12 @@ public class User {
     private String city;
 
     private String zip;
+
+    public User(){
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        Date date = new Date();
+        this.dateCreated = dateFormat.format(date);
+    }
 
     public Long getUserId() {
         return userId;
