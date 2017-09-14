@@ -1,5 +1,9 @@
 package com.se491.sensorweb.User;
 
+import org.hibernate.validator.internal.constraintvalidators.hv.EmailValidator;
+import org.springframework.validation.Errors;
+import org.springframework.validation.ValidationUtils;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -138,5 +142,13 @@ public class User {
         this.email = email;
     }
 
+    public boolean validate() {
+        if(this.email == null || this.email.equals("")){
+            return false;
+        }
+
+
+        return true;
+    }
 
 }

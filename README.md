@@ -13,3 +13,25 @@ values, or you can change your mysql root password to match.
 
 This project also requires that you have a database called `sensorweb` on your localhost mysql server.
 Once the database (schema) has been created, JPA will do the rest of the work for you.
+
+## Endpoints
+Following, is a list of endpoints and the information they provide. 
+
+Ex: `http://localhost:8181/users/1` -- Will return the information for the user with ID = 1
+
+
+### Users `/users`
+
+
+`/{id}` - Returns information for the user with the input id
+
+`/username/{username}` - Returns information for the user with the input username
+
+`/email/{email}/` - Returns information for the user with the input email - It is important to include the closing /
+
+`'
+### Home Nodes
+
+### Leaf Nodes
+
+### Readings
