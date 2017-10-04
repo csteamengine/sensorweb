@@ -1,7 +1,6 @@
 package com.se491.sensorweb.Controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.Gson;
+import com.se491.sensorweb.DTO.NodeDataDto;
 import com.se491.sensorweb.Entity.EchoRequest;
 import com.se491.sensorweb.HomeNode.HomeNode;
 import com.se491.sensorweb.Service.EchoService;
@@ -12,8 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.xml.ws.Response;
-import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -72,33 +69,20 @@ public class HomeController {
     }
 
 
-    @RequestMapping("/echo")
-    public String loopback(@RequestParam String data){
-        boolean isValidJson;
-        //Try to parse the "json", return false if we cant (meaning the json is invalid).
-        try{
-            final ObjectMapper mapper = new ObjectMapper();
-            mapper.readTree(data);
-            isValidJson = true;
+    @RequestMapping(method = RequestMethod.POST, value = "/echo")
+    public String loopback(@RequestBody NodeDataDto data){
 
-        } catch (IOException e) {
-            isValidJson = false;
-        }
-        //Return if the string is valid, and the text
-        EchoRequest request = new EchoRequest(isValidJson, data);
+        //We are expecting a java object with the
+        EchoRequest request = new EchoRequest(true, "Parsed Data: \n"+data.toString());
 
         //Set our loopback utils last request
         echoService.addRequest(request);
         return request.toString();
     }
 
-    @RequestMapping("/echo/view")
+    @RequestMapping(method = RequestMethod.GET, value="/echo")
     public String loopbackView(){
         return echoService.printRequests();
     }
 
-//    @RequestMapping("/")
-//    public String hello(){
-//        return "ayy";
-//    }
 }
