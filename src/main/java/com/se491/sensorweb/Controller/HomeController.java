@@ -29,12 +29,14 @@ public class HomeController {
     @Autowired
     private HomeNodeService homeNodeService;
 
+
     /**
      *
      * Gets list of all users.
      *
      * @return list of all users
      */
+    @CrossOrigin(origins = "http://localhost:3000")
     @RequestMapping(method = RequestMethod.GET, value = "/users", produces = "application/json")
     public ResponseEntity getUsers(){
         List<User> users = this.userService.getAllUsers();
@@ -42,6 +44,7 @@ public class HomeController {
         return ResponseEntity.ok(users);
     }
 
+    @CrossOrigin(origins = "http://localhost:3000")
     @RequestMapping(method = RequestMethod.GET, value = "/users/username/{username}", produces = "application/json")
     public ResponseEntity getUserByUsername(@PathVariable("username") String username){
         User user = this.userService.getUserByUsername(username);
@@ -54,6 +57,7 @@ public class HomeController {
         return ResponseEntity.ok(user);
     }
 
+    @CrossOrigin(origins = "http://localhost:3000")
     @RequestMapping(method = RequestMethod.GET, value = "/users/email/{email}", produces = "application/json")
     public ResponseEntity getUserByEmail(@PathVariable("email") String email){
         User user = this.userService.getUserByEmail(email);
@@ -72,6 +76,7 @@ public class HomeController {
      *
      * @return list of all home nodes
      */
+    @CrossOrigin(origins = "http://localhost:3000")
     @RequestMapping(method = RequestMethod.GET, value = "/homenodes", produces = "application/json")
     public ResponseEntity getHomeNodes(){
         //TODO get all users into json.
@@ -87,6 +92,7 @@ public class HomeController {
      *
      * @return the user
      */
+    @CrossOrigin(origins = "http://localhost:3000")
     @RequestMapping(method = RequestMethod.GET, value = "/users/{id}", produces = "application/json")
     public ResponseEntity getUserById(@PathVariable("id") Long id) {
 
@@ -105,14 +111,19 @@ public class HomeController {
      *
      * @return the user
      */
+    @CrossOrigin(origins = "http://localhost:63343")
     @RequestMapping(method = RequestMethod.POST, value = "/users", produces = "application/json")
     public ResponseEntity addUser(@RequestBody User user) {
-
         if(user.validate()){
-            userService.addUser(user);
-            return ResponseEntity.ok(user);
+            User foundUser = userService.getUserByUsername(user.getUsername());
+            if(foundUser == null){
+                userService.addUser(user);
+                return ResponseEntity.ok(user);
+            }
+            Error error = new Error("222", "Username taken");
+            return ResponseEntity.ok(error);
         }else{
-            Error error = new Error("Incorrect Attributes Provided", "Check the specifications for how to format your requests.");
+            Error error = new Error("222", "Check the specifications for how to format your requests.");
             return ResponseEntity.ok(error);
         }
 
@@ -125,6 +136,7 @@ public class HomeController {
      *
      * @return the user
      */
+    @CrossOrigin(origins = "http://localhost:3000")
     @RequestMapping(method = RequestMethod.POST, value = "/users/{id}", produces = "application/json")
     public ResponseEntity editUser(@RequestBody User user) {
         if(user.getUserId() != null || !user.getUserId().equals("")){
@@ -148,6 +160,7 @@ public class HomeController {
      *
      * @return the user
      */
+    @CrossOrigin(origins = "http://localhost:3000")
     @RequestMapping(method = RequestMethod.DELETE, value = "/users/{id}", produces = "application/json")
     public ResponseEntity deleteUser(@PathVariable("id") Long id) {
         User deletedUser = userService.deleteUser(id);
@@ -161,6 +174,7 @@ public class HomeController {
 
     }
 
+    @CrossOrigin(origins = "http://localhost:3000")
     @RequestMapping("/echo")
     public String loopback(@RequestParam String data){
         boolean isValidJson;
@@ -181,6 +195,7 @@ public class HomeController {
         return request.toString();
     }
 
+    @CrossOrigin(origins = "http://localhost:3000")
     @RequestMapping("/echo/view")
     public String loopbackView(){
         return echoService.printRequests();

@@ -66,6 +66,9 @@ public class UserService {
         return savedUser;
     }
 
+
+    public boolean checkForUsername(String username){ return userRepository.existsByUsername(username);}
+
     /**
      * Updates the user
      * @param user the user to udate
