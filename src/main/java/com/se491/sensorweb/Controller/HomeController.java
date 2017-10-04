@@ -1,7 +1,6 @@
 package com.se491.sensorweb.Controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.Gson;
+import com.se491.sensorweb.DTO.NodeDataDto;
 import com.se491.sensorweb.Entity.EchoRequest;
 import com.se491.sensorweb.HomeNode.HomeNode;
 import com.se491.sensorweb.Service.EchoService;
@@ -12,6 +11,7 @@ import com.se491.sensorweb.dto.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import com.se491.sensorweb.error.Error;
 import javax.xml.ws.Response;
 import java.io.IOException;
@@ -164,82 +164,66 @@ public class HomeController {
             return ResponseEntity.ok(error);
         }
 
-    }
 
-    /**
-     * Edits an existing user.
-     *
-     * @param user
-     *
-     * @return the user
-     */
-    @CrossOrigin(origins = "http://localhost:3000")
-    @RequestMapping(method = RequestMethod.POST, value = "/users/{id}", produces = "application/json")
-    public ResponseEntity editUser(@RequestBody User user) {
-        if(user.getUserId() != null || !user.getUserId().equals("")){
-            Error error = new Error("Incorrect Attributes Provided", "Make sure to user the correct endpoint to update a user.");
-            return ResponseEntity.ok(error);
-        }
-        if(user.validate()){
-            userService.updateUser(user);
-            return ResponseEntity.ok(user);
-        }else{
-            Error error = new Error("Incorrect Attributes Provided", "Check the specifications for how to format your requests.");
-            return ResponseEntity.ok(error);
-        }
+        /**
+         * Edits an existing user.
+         *
+         * @param user
+         *
+         * @return the user
+         */
+        @CrossOrigin(origins = "http://localhost:3000")
+        @RequestMapping(method = RequestMethod.POST, value = "/users/{id}", produces = "application/json")
+        public ResponseEntity editUser(@RequestBody User user) {
+            if(user.getUserId() != null || !user.getUserId().equals("")){
+                Error error = new Error("Incorrect Attributes Provided", "Make sure to user the correct endpoint to update a user.");
+                return ResponseEntity.ok(error);
+            }
+            if(user.validate()){
+                userService.updateUser(user);
+                return ResponseEntity.ok(user);
+            }else{
+                Error error = new Error("Incorrect Attributes Provided", "Check the specifications for how to format your requests.");
+                return ResponseEntity.ok(error);
+            }
 
-    }
-
-    /**
-     * Deletes an existing user.
-     *
-     * @param id
-     *
-     * @return the user
-     */
-    @CrossOrigin(origins = "http://localhost:3000")
-    @RequestMapping(method = RequestMethod.DELETE, value = "/users/{id}", produces = "application/json")
-    public ResponseEntity deleteUser(@PathVariable("id") Long id) {
-        User deletedUser = userService.deleteUser(id);
-
-        if(deletedUser == null){
-            Error error = new Error("Error deleting user with provided userId", id.toString());
-            return ResponseEntity.ok(error);
         }
 
-        return ResponseEntity.ok(deletedUser);
+        /**
+         * Deletes an existing user.
+         *
+         * @param id
+         *
+         * @return the user
+         */
+        @CrossOrigin(origins = "http://localhost:3000")
+        @RequestMapping(method = RequestMethod.DELETE, value = "/users/{id}", produces = "application/json")
+        public ResponseEntity deleteUser(@PathVariable("id") Long id) {
+            User deletedUser = userService.deleteUser(id);
 
-    }
+            if(deletedUser == null){
+                Error error = new Error("Error deleting user with provided userId", id.toString());
+                return ResponseEntity.ok(error);
+            }
 
-    @CrossOrigin(origins = "http://localhost:3000")
-    @RequestMapping("/echo")
-    public String loopback(@RequestParam String data){
-        boolean isValidJson;
-        //Try to parse the "json", return false if we cant (meaning the json is invalid).
-        try{
-            final ObjectMapper mapper = new ObjectMapper();
-            mapper.readTree(data);
-            isValidJson = true;
+            return ResponseEntity.ok(deletedUser);
 
-        } catch (IOException e) {
-            isValidJson = false;
-        }
-        //Return if the string is valid, and the text
-        EchoRequest request = new EchoRequest(isValidJson, data);
+            @CrossOrigin(origins = "http://localhost:3000")
+    @RequestMapping(method = RequestMethod.POST, value = "/echo")
+    public String loopback(@RequestBody NodeDataDto data){
+
+        //We are expecting a java object with the
+        EchoRequest request = new EchoRequest(true, "Parsed Data: \n"+data.toString());
 
         //Set our loopback utils last request
         echoService.addRequest(request);
         return request.toString();
     }
 
-    @CrossOrigin(origins = "http://localhost:3000")
-    @RequestMapping("/echo/view")
+        @CrossOrigin(origins = "http://localhost:3000")
+        @RequestMapping(method = RequestMethod.GET, value="/echo")
     public String loopbackView(){
         return echoService.printRequests();
     }
 
-//    @RequestMapping("/")
-//    public String hello(){
-//        return "ayy";
-//    }
 }
