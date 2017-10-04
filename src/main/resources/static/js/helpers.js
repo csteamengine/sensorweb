@@ -11,7 +11,7 @@ function sendRequest(url, data){
     $.ajax({
         headers: {
             'Accept': 'application/json',
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
         },
         'type': 'POST',
         'url': url,

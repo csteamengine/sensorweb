@@ -4,14 +4,14 @@ $('#signup-form').submit(function(event){
     var user = parseObject(form);
 
     if(user.password === user.verifyPassword){
-       sendRequest('/users', user, signupUser);
+        sendRequest('/users', user, signupUser);
     }
 });
 
 function signupUser(response){
     if(response.error == 222){
         //Username is taken
-        console.log('username is already taken');
+        console.log('username is already taken nerd');
     }else{
         //Store user information in the cookies.
         $.cookie('user', response);
