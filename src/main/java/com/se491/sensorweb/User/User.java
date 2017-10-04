@@ -50,14 +50,19 @@ public class User {
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         Date date = new Date();
         this.dateCreated = dateFormat.format(date);
+        this.isActive = true;
     }
 
     public String getPassword() {
         return password;
     }
 
-    public void setPassword(String password) throws Exception {
-        this.password = getSaltedHash(password);
+    public void setPassword(String password){
+        this.password = password;
+    }
+
+    public void hashPassword() throws Exception {
+        this.password = getSaltedHash(this.password);
     }
 
     public boolean checkPassword(String inputPass) throws Exception {
@@ -161,10 +166,29 @@ public class User {
     }
 
     public boolean validate() {
-        if(this.password == null || this.password.equals("") || this.username == null || this.username.equals("") ||this.email == null || this.email.equals("")){
+        if(this.password == null || this.password.equals("") || this.username == null || this.username.equals("")){
             return false;
         }
         return true;
+    }
+
+    @Override
+    public String toString(){
+        return "{" +
+                "\'userId\'" + ": \'" + this.userId + "\'" +
+                "\'firstName\'" + ": \'" + this.firstName + "\'" +
+                "\'lastName\'" + ": \'" + this.lastName + "\'" +
+                "\'username\'" + ": \'" + this.username + "\'" +
+                "\'isActive\'" + ": \'" + this.isActive +
+                "\'dateCreated\'" + ": \'" + this.dateCreated + "\'" +
+                "\'email\'" + ": \'" + this.email + "\'" +
+                "\'addressLine1\'" + ": \'" + this.addressLine1 + "\'" +
+                "\'addressLine2\'" + ": \'" + this.addressLine2 + "\'" +
+                "\'state\'" + ": \'" + this.state + "\'" +
+                "\'city\'" + ": \'" + this.city + "\'" +
+                "\'zip\'" + ": \'" + this.zip + "\'" +
+                "}";
+
     }
 
 }

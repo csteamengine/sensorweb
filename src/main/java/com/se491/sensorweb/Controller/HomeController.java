@@ -57,6 +57,42 @@ public class HomeController {
         return ResponseEntity.ok(user);
     }
 
+    /**
+     * Checks a users password
+     *
+     * @param user
+     *
+     * @return the user
+     */
+    @CrossOrigin(origins = "http://localhost:63343")
+    @RequestMapping(method = RequestMethod.POST, value = "/users/login", produces = "application/json")
+    public ResponseEntity loginUser(@RequestBody User user) throws Exception {
+        if(user.validate()){
+            User foundUser = userService.getUserByUsername(user.getUsername());
+            if(foundUser == null){
+                foundUser = userService.getUserByEmail(user.getUsername());
+                if(foundUser == null){
+                    Error error = new Error("222", "Incorrect Username or Password");
+                    return ResponseEntity.ok(error);
+                }
+            }
+
+            if(foundUser.checkPassword(user.getPassword())){
+
+                return ResponseEntity.ok(user);
+            }else{
+                Error error = new Error("222", "Incorrect Username or Password");
+                return ResponseEntity.ok(error);
+            }
+
+        }else{
+            Error error = new Error("222", "Check the specifications for how to format your requests.");
+            return ResponseEntity.ok(error);
+        }
+
+    }
+
+
     @CrossOrigin(origins = "http://localhost:3000")
     @RequestMapping(method = RequestMethod.GET, value = "/users/email/{email}", produces = "application/json")
     public ResponseEntity getUserByEmail(@PathVariable("email") String email){
@@ -113,14 +149,15 @@ public class HomeController {
      */
     @CrossOrigin(origins = "http://localhost:63343")
     @RequestMapping(method = RequestMethod.POST, value = "/users", produces = "application/json")
-    public ResponseEntity addUser(@RequestBody User user) {
+    public ResponseEntity addUser(@RequestBody User user) throws Exception {
         if(user.validate()){
             User foundUser = userService.getUserByUsername(user.getUsername());
             if(foundUser == null){
+                user.hashPassword();
                 userService.addUser(user);
                 return ResponseEntity.ok(user);
             }
-            Error error = new Error("222", "Username taken");
+            Error error = new Error("222", "Username already taken");
             return ResponseEntity.ok(error);
         }else{
             Error error = new Error("222", "Check the specifications for how to format your requests.");

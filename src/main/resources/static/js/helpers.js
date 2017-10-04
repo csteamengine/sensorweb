@@ -7,18 +7,40 @@ function parseObject(form){
     return object;
 }
 
-function sendRequest(url, data){
+function postRequest(url, data, callback){
     $.ajax({
         headers: {
             'Accept': 'application/json',
-            'Content-Type': 'application/json',
+            'Content-Type': 'application/json'
         },
         'type': 'POST',
         'url': url,
         'data': JSON.stringify(data),
         'dataType': 'json',
         'success': function(response){
-            signupUser(response);
+            callback(response);
+        }
+    })
+}
+
+function getRequest(url, callback){
+    $.ajax({
+        'type': 'GET',
+        'url': url,
+        'dataType': 'json',
+        'success': function(response){
+            callback(response)
+        }
+    })
+}
+
+function deleteRequest(url, callback){
+    $.ajax({
+        'type': 'DELETE',
+        'url': url,
+        'dataType': 'json',
+        'success': function(response){
+            callback(response);
         }
     })
 }
