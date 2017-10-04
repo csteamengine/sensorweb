@@ -1,5 +1,10 @@
 package com.se491.sensorweb.User;
 
+import com.se491.sensorweb.Password;
+import org.hibernate.validator.internal.constraintvalidators.hv.EmailValidator;
+import org.springframework.validation.Errors;
+import org.springframework.validation.ValidationUtils;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -7,6 +12,9 @@ import javax.persistence.Id;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import static com.se491.sensorweb.Password.check;
+import static com.se491.sensorweb.Password.getSaltedHash;
 
 @Entity // This tells Hibernate to make a table out of this class
 public class User {
@@ -24,6 +32,8 @@ public class User {
 
     private String username;
 
+    private String password;
+
     private String email;
 
     private String addressLine1;
@@ -40,6 +50,18 @@ public class User {
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         Date date = new Date();
         this.dateCreated = dateFormat.format(date);
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) throws Exception {
+        this.password = getSaltedHash(password);
+    }
+
+    public boolean checkPassword(String inputPass) throws Exception {
+        return check(inputPass, this.password);
     }
 
     public Long getUserId() {
@@ -138,5 +160,11 @@ public class User {
         this.email = email;
     }
 
+    public boolean validate() {
+        if(this.password == null || this.password.equals("") || this.username == null || this.username.equals("") ||this.email == null || this.email.equals("")){
+            return false;
+        }
+        return true;
+    }
 
 }

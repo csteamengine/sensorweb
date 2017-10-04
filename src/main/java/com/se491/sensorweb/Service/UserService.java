@@ -21,7 +21,7 @@ public class UserService {
     /**
      * Get a user by their id
      * @param userId the user Id
-     * @return
+     * @return new user
      */
     public User getUserById(Long userId) {
         return userRepository.findOne(userId);
@@ -30,10 +30,20 @@ public class UserService {
     /**
      * Gets a user by their email
      * @param email the email
-     * @return
+     * @return new user
      */
     public User getUserByEmail(String email) {
         return userRepository.findByEmail(email);
+    }
+
+    /**
+     * Gets a user by username
+     *
+     * @param username
+     * @return new user.
+     */
+    public User getUserByUsername(String username){
+        return userRepository.findByUsername(username);
     }
 
 
@@ -56,29 +66,34 @@ public class UserService {
         return savedUser;
     }
 
+
+    public boolean checkForUsername(String username){ return userRepository.existsByUsername(username);}
+
     /**
      * Updates the user
      * @param user the user to udate
      * @return the new user
      */
-//    public User updateUser(String email, String) {
-//
-//        User savedUser = this.userRepository.findByUserId(user.getUserId());
-//
-//        savedUser.setEmail(user.getEmail());
-//        savedUser.setFirstName(user.getFirstName());
-//        savedUser.setLastName(user.getLastName());
-//        savedUser.setActive(user.isActive());
-//        savedUser.setDateCreated(user.getDateCreated());
-//        savedUser.setUsername(user.getUsername());
-//        savedUser.setRole(user.getRole());
-//        savedUser.setLastUpdated(new Date());
-//
-//        this.userRepository.save(savedUser);
-//
-//        return savedUser;
-//
-//    }
+    public User updateUser(User user) {
+
+        User savedUser = this.getUserById(user.getUserId());
+
+        savedUser.setEmail(user.getEmail());
+        savedUser.setFirstName(user.getFirstName());
+        savedUser.setLastName(user.getLastName());
+        savedUser.setActive(user.isActive());
+        savedUser.setDateCreated(user.getDateCreated());
+        savedUser.setUsername(user.getUsername());
+        savedUser.setAddressLine1(user.getAddressLine1());
+        savedUser.setAddressLine2(user.getAddressLine2());
+        savedUser.setState(user.getState());
+        savedUser.setCity(user.getCity());
+        savedUser.setZip(user.getZip());
+        this.userRepository.save(savedUser);
+
+        return savedUser;
+
+    }
 
     /**
      * Deletes a user from the database
