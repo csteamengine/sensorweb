@@ -16,117 +16,178 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `home_node`
+-- Table structure for table `homenode_leafnodes`
 --
 
-DROP TABLE IF EXISTS `home_node`;
+DROP TABLE IF EXISTS `homenode_leafnodes`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `home_node` (
-  `home_node_id` int(11) NOT NULL AUTO_INCREMENT,
-  `date_created` varchar(255) DEFAULT NULL,
-  `is_active` bit(1) NOT NULL,
-  `nick_name` varchar(255) DEFAULT NULL,
+CREATE TABLE `homenode_leafnodes` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `homenode_id` int(11) NOT NULL,
+  `leafnode_id` int(11) NOT NULL,
+  `is_active` bit(1) DEFAULT b'1',
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `homenode_leafnodes`
+--
+
+LOCK TABLES `homenode_leafnodes` WRITE;
+/*!40000 ALTER TABLE `homenode_leafnodes` DISABLE KEYS */;
+/*!40000 ALTER TABLE `homenode_leafnodes` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `homenodes`
+--
+
+DROP TABLE IF EXISTS `homenodes`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `homenodes` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `unique_id` varchar(255) NOT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `is_active` bit(1) DEFAULT b'1',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `homenodes`
+--
+
+LOCK TABLES `homenodes` WRITE;
+/*!40000 ALTER TABLE `homenodes` DISABLE KEYS */;
+/*!40000 ALTER TABLE `homenodes` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `leafnodes`
+--
+
+DROP TABLE IF EXISTS `leafnodes`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `leafnodes` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `homenode_id` int(11) NOT NULL,
+  `latitude` float DEFAULT NULL,
+  `longitude` float DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `is_active` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `leafnodes`
+--
+
+LOCK TABLES `leafnodes` WRITE;
+/*!40000 ALTER TABLE `leafnodes` DISABLE KEYS */;
+/*!40000 ALTER TABLE `leafnodes` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `readings`
+--
+
+DROP TABLE IF EXISTS `readings`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `readings` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `leafnode_id` int(11) NOT NULL,
+  `datatype_id` int(11) DEFAULT NULL,
+  `value` varchar(1024) DEFAULT NULL,
+  `is_active` bit(1) DEFAULT b'1',
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `readings`
+--
+
+LOCK TABLES `readings` WRITE;
+/*!40000 ALTER TABLE `readings` DISABLE KEYS */;
+/*!40000 ALTER TABLE `readings` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `user_homenodes`
+--
+
+DROP TABLE IF EXISTS `user_homenodes`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `user_homenodes` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) DEFAULT NULL,
-  PRIMARY KEY (`home_node_id`)
+  `homenode_id` int(11) DEFAULT NULL,
+  `is_active` bit(1) DEFAULT b'1',
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `home_node`
+-- Dumping data for table `user_homenodes`
 --
 
-LOCK TABLES `home_node` WRITE;
-/*!40000 ALTER TABLE `home_node` DISABLE KEYS */;
-/*!40000 ALTER TABLE `home_node` ENABLE KEYS */;
+LOCK TABLES `user_homenodes` WRITE;
+/*!40000 ALTER TABLE `user_homenodes` DISABLE KEYS */;
+/*!40000 ALTER TABLE `user_homenodes` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `leaf_node`
+-- Table structure for table `users`
 --
 
-DROP TABLE IF EXISTS `leaf_node`;
+DROP TABLE IF EXISTS `users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `leaf_node` (
-  `leaf_node_id` int(11) NOT NULL AUTO_INCREMENT,
-  `date_created` varchar(255) DEFAULT NULL,
-  `home_node_id` int(11) DEFAULT NULL,
-  `is_active` bit(1) NOT NULL,
-  `user_id` int(11) DEFAULT NULL,
-  PRIMARY KEY (`leaf_node_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `leaf_node`
---
-
-LOCK TABLES `leaf_node` WRITE;
-/*!40000 ALTER TABLE `leaf_node` DISABLE KEYS */;
-/*!40000 ALTER TABLE `leaf_node` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `sensor_reading`
---
-
-DROP TABLE IF EXISTS `sensor_reading`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `sensor_reading` (
-  `sensor_reading_id` int(11) NOT NULL AUTO_INCREMENT,
-  `date_created` varchar(255) DEFAULT NULL,
-  `home_node_id` int(11) DEFAULT NULL,
-  `is_active` bit(1) NOT NULL,
-  `leaf_node_id` int(11) DEFAULT NULL,
-  `reading_value` float NOT NULL,
-  PRIMARY KEY (`sensor_reading_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `sensor_reading`
---
-
-LOCK TABLES `sensor_reading` WRITE;
-/*!40000 ALTER TABLE `sensor_reading` DISABLE KEYS */;
-/*!40000 ALTER TABLE `sensor_reading` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `user`
---
-
-DROP TABLE IF EXISTS `user`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `user` (
-  `user_id` bigint(20) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `users` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `username` varchar(255) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `first_name` varchar(255) DEFAULT NULL,
+  `last_name` varchar(255) DEFAULT NULL,
+  `password` varchar(255) DEFAULT NULL,
   `address_line1` varchar(255) DEFAULT NULL,
   `address_line2` varchar(255) DEFAULT NULL,
   `city` varchar(255) DEFAULT NULL,
-  `date_created` varchar(255) DEFAULT NULL,
-  `email` varchar(255) DEFAULT NULL,
-  `first_name` varchar(255) DEFAULT NULL,
-  `is_active` bit(1) NOT NULL,
-  `last_name` varchar(255) DEFAULT NULL,
   `state` varchar(255) DEFAULT NULL,
-  `username` varchar(255) DEFAULT NULL,
   `zip` varchar(255) DEFAULT NULL,
-  `password` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+  `remember_token` text,
+  `is_active` bit(1) NOT NULL DEFAULT b'1',
+  `timestamp` time DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `user`
+-- Dumping data for table `users`
 --
 
-LOCK TABLES `user` WRITE;
-/*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (3,'113 East 6th Street',NULL,'Ames','09/07/2017','gcs@iastate.edu','Gregory','','Steenhagen','IA','csteamengine','50010',NULL),(7,NULL,NULL,NULL,'2017/10/03 18:11:36','gcs@iastate.edu','Gregory','\0','Steenhagen',NULL,'csteen1005',NULL,'0oGG0QfsZ76bvysqrZqB/WoOnMdDIQEEHEt0VEDMAr0=$/qqUM/6MCv1oq9vxOoOThpkgg0zW2mnnR0Y3nA3oxcU='),(8,NULL,NULL,NULL,'2017/10/03 18:15:35','gcs@iastate.edu','Gregory','\0','Steenhagen',NULL,'test',NULL,'N/DWY0CkK24KEjb7cJXXM3OwMy81IaohYx4nehIPnD8=$e7r2uoSV2GgPQs/8ewsB7XHkDV3oeLo5r3IOKUY+wrw=');
-/*!40000 ALTER TABLE `user` ENABLE KEYS */;
+LOCK TABLES `users` WRITE;
+/*!40000 ALTER TABLE `users` DISABLE KEYS */;
+INSERT INTO `users` VALUES (1,NULL,'csteen1005@gmail.com','Gregory C Steenhagen',NULL,NULL,'$2y$10$zNOH9..FTiprli6tydVfJOj9It9I9lxzgPBnO3W0Xi3ibsq0sensu',NULL,NULL,NULL,NULL,NULL,'UCeuzEgeXAENfD8fvOB9Is3fBVnuexamCHacZ3oloMExMJHxTph9zSJykmzV','',NULL,'2017-10-05 00:33:15','2017-10-05 00:33:15'),(2,NULL,'gcs@iastate.edu','Gregory C Steenhagen',NULL,NULL,'$2y$10$ia8lilwNlqrN/HomC1A4y.Z4kjiBkIrQPQBlGqnQiFdubIKwVudOO',NULL,NULL,NULL,NULL,NULL,'DtYvFYNvdr1VrZvSbM7IX9L07sbVg86RijsaTUfFK709b87HdZOr4eoaKOOR','',NULL,'2017-10-05 01:45:41','2017-10-05 01:45:41');
+/*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -138,4 +199,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-10-03 20:50:51
+-- Dump completed on 2017-10-04 22:40:01
