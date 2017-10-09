@@ -5,16 +5,14 @@ import com.se491.sensorweb.Entity.EchoRequest;
 import com.se491.sensorweb.HomeNode.HomeNode;
 import com.se491.sensorweb.Service.EchoService;
 import com.se491.sensorweb.Service.HomeNodeService;
+import com.se491.sensorweb.Service.RouteService;
 import com.se491.sensorweb.Service.UserService;
 import com.se491.sensorweb.User.User;
-import com.se491.sensorweb.dto.UserDTO;
+import com.se491.sensorweb.error.Error;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.se491.sensorweb.error.Error;
-import javax.xml.ws.Response;
-import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -28,6 +26,9 @@ public class HomeController {
 
     @Autowired
     private HomeNodeService homeNodeService;
+
+    @Autowired
+    private RouteService routeService;
 
 
     /**
@@ -114,18 +115,19 @@ public class HomeController {
     @CrossOrigin(origins = "http://localhost:63343")
     @RequestMapping(method = RequestMethod.POST, value = "/users", produces = "application/json")
     public ResponseEntity addUser(@RequestBody User user) {
-        if(user.validate()){
+        if (user.validate()) {
             User foundUser = userService.getUserByUsername(user.getUsername());
-            if(foundUser == null){
+            if (foundUser == null) {
                 userService.addUser(user);
                 return ResponseEntity.ok(user);
             }
             Error error = new Error("222", "Username taken");
             return ResponseEntity.ok(error);
-        }else{
+        } else {
             Error error = new Error("222", "Check the specifications for how to format your requests.");
             return ResponseEntity.ok(error);
         }
+    }
 
 
         /**
@@ -164,29 +166,36 @@ public class HomeController {
         public ResponseEntity deleteUser(@PathVariable("id") Long id) {
             User deletedUser = userService.deleteUser(id);
 
-            if(deletedUser == null){
+            if (deletedUser == null) {
                 Error error = new Error("Error deleting user with provided userId", id.toString());
                 return ResponseEntity.ok(error);
             }
 
             return ResponseEntity.ok(deletedUser);
+        }
 
-            @CrossOrigin(origins = "http://localhost:3000")
-    @RequestMapping(method = RequestMethod.POST, value = "/echo")
-    public String loopback(@RequestBody NodeDataDto data){
+        @CrossOrigin
+        @RequestMapping(method = RequestMethod.POST, value = "/echo")
+        public String loopback(@RequestBody NodeDataDto data){
 
-        //We are expecting a java object with the
-        EchoRequest request = new EchoRequest(true, "Parsed Data: \n"+data.toString());
+            //We are expecting a java object with certain parameters
+            EchoRequest request = new EchoRequest(true, "Parsed Data: \n"+data.toString());
 
-        //Set our loopback utils last request
-        echoService.addRequest(request);
-        return request.toString();
-    }
+            //Set our loopback utils last request
+            echoService.addRequest(request);
+            return request.toString();
+        }
 
-        @CrossOrigin(origins = "http://localhost:3000")
+        @CrossOrigin
         @RequestMapping(method = RequestMethod.GET, value="/echo")
-    public String loopbackView(){
-        return echoService.printRequests();
-    }
+        public String loopbackView(){
+            return echoService.printRequests();
+        }
+
+        @CrossOrigin
+        @RequestMapping(method = RequestMethod.GET, value="/{destination}/path")
+        public int[] route(@PathVariable("destination") int destination){
+            return routeService.getPathToDestination(destination);
+        }
 
 }
