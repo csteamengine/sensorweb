@@ -1,12 +1,9 @@
-com/se491/sensorweb/dto/UserDTO.class
 com/se491/sensorweb/Service/EchoService.class
 com/se491/sensorweb/error/Error.class
-com/se491/sensorweb/User/UserRepository.class
 com/se491/sensorweb/Entity/EchoRequest.class
 com/se491/sensorweb/HomeNode/HomeNode.class
 com/se491/sensorweb/dto/NodeDataDto.class
 com/se491/sensorweb/SensorwebApplication.class
-com/se491/sensorweb/Service/UserService.class
 com/se491/sensorweb/Reading/SensorReadingRepository.class
 com/se491/sensorweb/LeafNode/LeafNodeRepository.class
 com/se491/sensorweb/Controller/HomeController.class
@@ -14,6 +11,4 @@ com/se491/sensorweb/Service/HomeNodeService.class
 com/se491/sensorweb/HomeNode/HomeNodeRepository.class
 com/se491/sensorweb/Service/RouteService.class
 com/se491/sensorweb/LeafNode/LeafNode.class
-com/se491/sensorweb/Reading/SensorReading.class
-com/se491/sensorweb/User/User.class
-com/se491/sensorweb/Password.class
+com/se491/sensorweb/Reading/Reading.class
