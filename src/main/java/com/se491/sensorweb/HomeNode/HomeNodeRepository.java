@@ -1,9 +1,9 @@
 package com.se491.sensorweb.HomeNode;
 
-import org.springframework.data.repository.CrudRepository;
-// This will be AUTO IMPLEMENTED by Spring into a Bean called userRepository
+import org.springframework.data.jpa.repository.JpaRepository;
+// This will be AUTO IMPLEMENTED by Spring into a Bean called homeNodeRepository
 // CRUD refers Create, Read, Update, Delete
 
-public interface HomeNodeRepository extends CrudRepository<HomeNode, Long> {
+public interface HomeNodeRepository extends JpaRepository<HomeNode, Long> {
 
 }

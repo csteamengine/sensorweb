@@ -9,46 +9,79 @@ import javax.persistence.Id;
 public class LeafNode {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
-    private Integer leafNodeId;
+    private Long id;
 
-    private Integer homeNodeId;
+    private Long homeNodeId;
 
-    private Integer userId;
+    private float latitude;
 
-    private String dateCreated;
+    private float longitude;
+
+    private String createdAt;
+
+    private String updatedAt;
 
     private boolean isActive;
 
-    public Integer getLeafNodeId() {
-        return leafNodeId;
+    public LeafNode() {
+
     }
 
-    public void setLeafNodeId(Integer leafNodeId) {
-        this.leafNodeId = leafNodeId;
+    public LeafNode(Long homeNodeId, float latitude, float longitude, String createdAt, String updatedAt, boolean isActive) {
+        this.homeNodeId = homeNodeId;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+        this.isActive = isActive;
     }
 
-    public Integer getHomeNodeId() {
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getHomeNodeId() {
         return homeNodeId;
     }
 
-    public void setHomeNodeId(Integer homeNodeId) {
+    public void setHomeNodeId(Long homeNodeId) {
         this.homeNodeId = homeNodeId;
     }
 
-    public Integer getUserId() {
-        return userId;
+    public float getLatitude() {
+        return latitude;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setLatitude(float latitude) {
+        this.latitude = latitude;
     }
 
-    public String getDateCreated() {
-        return dateCreated;
+    public float getLongitude() {
+        return longitude;
     }
 
-    public void setDateCreated(String dateCreated) {
-        this.dateCreated = dateCreated;
+    public void setLongitude(float longitude) {
+        this.longitude = longitude;
+    }
+
+    public String getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public String getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(String updatedAt) {
+        this.updatedAt = updatedAt;
     }
 
     public boolean isActive() {

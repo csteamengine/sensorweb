@@ -2,15 +2,12 @@ package com.se491.sensorweb.Service;
 
 import com.se491.sensorweb.HomeNode.HomeNode;
 import com.se491.sensorweb.HomeNode.HomeNodeRepository;
-import com.se491.sensorweb.User.User;
-import com.se491.sensorweb.User.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
+@Component
 public class HomeNodeService {
 
     @Autowired
@@ -26,6 +23,10 @@ public class HomeNodeService {
      */
     public List<HomeNode> getAllHomeNodes() {
         return (List<HomeNode>) homeNodeRepository.findAll();
+    }
+
+    public HomeNode getHomeNode(Long id){
+        return homeNodeRepository.findOne(id);
     }
 
 }

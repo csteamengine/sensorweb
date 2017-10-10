@@ -7,32 +7,50 @@ import javax.persistence.Id;
 
 @Entity // This tells Hibernate to make a table out of this class
 public class HomeNode {
+
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
-    private Integer homeNodeId;
+    private Long id;
 
-    private Integer userId;
-
-    private boolean isActive;
+    private String uniqueId;
 
     private String dateCreated;
 
-    private String nickName;
+    private float longitude;
 
-    public Integer getHomeNodeId() {
-        return homeNodeId;
+    private String createdAt;
+
+    private String updatedAt;
+
+    private boolean isActive;
+
+    public HomeNode() {
+
     }
 
-    public void setHomeNodeId(Integer homeNodeId) {
-        this.homeNodeId = homeNodeId;
+    public HomeNode(String uniqueId, String dateCreated, float longitude, String createdAt, String updatedAt, boolean isActive) {
+        this.uniqueId = uniqueId;
+        this.dateCreated = dateCreated;
+        this.longitude = longitude;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+        this.isActive = isActive;
     }
 
-    public Integer getUserId() {
-        return userId;
+    public Long getId() {
+        return id;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getUniqueId() {
+        return uniqueId;
+    }
+
+    public void setUniqueId(String uniqueId) {
+        this.uniqueId = uniqueId;
     }
 
     public boolean isActive() {
@@ -51,11 +69,27 @@ public class HomeNode {
         this.dateCreated = dateCreated;
     }
 
-    public String getNickName() {
-        return nickName;
+    public float getLongitude() {
+        return longitude;
     }
 
-    public void setNickName(String nickName) {
-        this.nickName = nickName;
+    public void setLongitude(float longitude) {
+        this.longitude = longitude;
+    }
+
+    public String getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public String getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(String updatedAt) {
+        this.updatedAt = updatedAt;
     }
 }
