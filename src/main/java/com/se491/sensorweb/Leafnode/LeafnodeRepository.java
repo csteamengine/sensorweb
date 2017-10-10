@@ -1,9 +1,9 @@
-package com.se491.sensorweb.LeafNode;
+package com.se491.sensorweb.Leafnode;
 
 import org.springframework.data.repository.CrudRepository;
 // This will be AUTO IMPLEMENTED by Spring into a Bean called userRepository
 // CRUD refers Create, Read, Update, Delete
 
-public interface LeafNodeRepository extends CrudRepository<LeafNode, Long> {
+public interface LeafnodeRepository extends CrudRepository<Leafnode, Long> {
 
 }

@@ -1,11 +1,10 @@
 package com.se491.sensorweb.Reading;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.sql.Timestamp;
 
 @Entity // This tells Hibernate to make a table out of this class
+@Table(name="readings")
 public class Reading {
 
     @Id
@@ -20,21 +19,24 @@ public class Reading {
 
     private boolean isActive;
 
-    private String createdAt;
+    @Basic(optional = false)
+    @Column(name = "created_at", insertable = false, updatable = false)
+    private Timestamp createdAt;
 
-    private String updatedAt;
+    @Basic(optional = false)
+    @Column(name = "updated_at", insertable = false, updatable = false)
+    private Timestamp updatedAt;
 
     public Reading() {
 
     }
 
-    public Reading(Long leafnodeId, Long datatypeId, String value, boolean isActive, String createdAt, String updatedAt) {
+    public Reading(Long leafnodeId, Long datatypeId, String value, boolean isActive) {
         this.leafnodeId = leafnodeId;
         this.datatypeId = datatypeId;
         this.value = value;
         this.isActive = isActive;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
+
     }
 
     public Long getId() {
@@ -77,19 +79,19 @@ public class Reading {
         isActive = active;
     }
 
-    public String getCreatedAt() {
+    public Timestamp getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(String createdAt) {
+    public void setCreatedAt(Timestamp createdAt) {
         this.createdAt = createdAt;
     }
 
-    public String getUpdatedAt() {
+    public Timestamp getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(String updatedAt) {
+    public void setUpdatedAt(Timestamp updatedAt) {
         this.updatedAt = updatedAt;
     }
 }

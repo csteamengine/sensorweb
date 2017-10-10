@@ -2,9 +2,9 @@ package com.se491.sensorweb.Controller;
 
 import com.se491.sensorweb.dto.NodeDataDto;
 import com.se491.sensorweb.Entity.EchoRequest;
-import com.se491.sensorweb.HomeNode.HomeNode;
+import com.se491.sensorweb.Homenode.Homenode;
 import com.se491.sensorweb.Service.EchoService;
-import com.se491.sensorweb.Service.HomeNodeService;
+import com.se491.sensorweb.Service.HomenodeService;
 import com.se491.sensorweb.Service.RouteService;
 import com.se491.sensorweb.error.Error;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,7 @@ public class HomeController {
     private EchoService echoService;
 
     @Autowired
-    private HomeNodeService homeNodeService;
+    private HomenodeService homenodeService;
 
     @Autowired
     private RouteService routeService;
@@ -33,35 +33,47 @@ public class HomeController {
      * @return list of all home nodes
      */
     @CrossOrigin
-    @RequestMapping(method = RequestMethod.GET, value = "/homeNodes", produces = "application/json")
-    public ResponseEntity getHomeNodes() {
-        //TODO get all users into json.
-        List<HomeNode> homeNodes = this.homeNodeService.getAllHomeNodes();
+    @RequestMapping(method = RequestMethod.GET, value = "/homenodes", produces = "application/json")
+    public ResponseEntity getHomenodes() {
+        List<Homenode> homenodes = this.homenodeService.getAllHomenodes();
         List<String> test = new ArrayList<>();
         test.add("Hello");
         test.add("Test");
         test.add("test again");
 
 
-        return ResponseEntity.ok(homeNodes);
+        return ResponseEntity.ok(homenodes);
     }
 
-
-    /**
-     * Gets list of all home nodes.
-     *
-     * @return list of all home nodes
-     */
     @CrossOrigin
-    @RequestMapping(method = RequestMethod.GET, value = "/homeNodes/{id}", produces = "application/json")
-    public ResponseEntity getHomeNode(@PathVariable("id") Long id) {
-        //TODO get all users into json.
-        HomeNode homeNode = this.homeNodeService.getHomeNode(id);
-        if(homeNode != null){
-            return ResponseEntity.ok(homeNode);
+    @RequestMapping(method = RequestMethod.GET, value = "/homenodes/{id}", produces = "application/json")
+    public ResponseEntity getHomenode(@PathVariable("id") Long id) {
+        Homenode homenode = this.homenodeService.getHomenode(id);
+        if(homenode != null){
+            return ResponseEntity.ok(homenode);
         }
         return ResponseEntity.ok(new Error("Cannot find homenode", id + ""));
     }
+
+    /**
+     * Adds a homenode to the database.
+     *
+     * @return the newly created homenode.
+     */
+    @CrossOrigin
+    @RequestMapping(method = RequestMethod.POST, value = "/homenodes", produces = "application/json")
+    public ResponseEntity addHomenode(@RequestBody Homenode homenode) {
+        Homenode existing = homenodeService.getHomenodeByUnique(homenode.getUniqueId());
+        if(existing == null){
+            Homenode newHomenode = homenodeService.addHomenode(homenode);
+            if(homenode != null){
+                return ResponseEntity.ok(newHomenode);
+            }
+            return ResponseEntity.ok(new Error("Could not created new homenode", "Sorry"));
+        }
+        return ResponseEntity.ok(existing);
+    }
+
 
     @CrossOrigin
     @RequestMapping(method = RequestMethod.POST, value = "/echo")

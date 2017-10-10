@@ -1,12 +1,11 @@
-package com.se491.sensorweb.HomeNode;
+package com.se491.sensorweb.Homenode;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.sql.Timestamp;
 
 @Entity // This tells Hibernate to make a table out of this class
-public class HomeNode {
+@Table(name = "homenodes")
+public class Homenode {
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
@@ -14,26 +13,27 @@ public class HomeNode {
 
     private String uniqueId;
 
-    private String dateCreated;
-
     private float longitude;
 
-    private String createdAt;
+    private float latitude;
 
-    private String updatedAt;
+    @Basic(optional = false)
+    @Column(name = "created_at", insertable = false, updatable = false)
+    private Timestamp createdAt;
+
+    @Basic(optional = false)
+    @Column(name = "updated_at", insertable = false, updatable = false)
+    private Timestamp updatedAt;
 
     private boolean isActive;
 
-    public HomeNode() {
+    public Homenode() {
 
     }
 
-    public HomeNode(String uniqueId, String dateCreated, float longitude, String createdAt, String updatedAt, boolean isActive) {
+    public Homenode(String uniqueId, float longitude, boolean isActive) {
         this.uniqueId = uniqueId;
-        this.dateCreated = dateCreated;
         this.longitude = longitude;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
         this.isActive = isActive;
     }
 
@@ -61,14 +61,6 @@ public class HomeNode {
         isActive = active;
     }
 
-    public String getDateCreated() {
-        return dateCreated;
-    }
-
-    public void setDateCreated(String dateCreated) {
-        this.dateCreated = dateCreated;
-    }
-
     public float getLongitude() {
         return longitude;
     }
@@ -77,19 +69,27 @@ public class HomeNode {
         this.longitude = longitude;
     }
 
-    public String getCreatedAt() {
+    public float getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(float latitude) {
+        this.latitude = latitude;
+    }
+
+    public Timestamp getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(String createdAt) {
+    public void setCreatedAt(Timestamp createdAt) {
         this.createdAt = createdAt;
     }
 
-    public String getUpdatedAt() {
+    public Timestamp getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(String updatedAt) {
+    public void setUpdatedAt(Timestamp updatedAt) {
         this.updatedAt = updatedAt;
     }
 }
