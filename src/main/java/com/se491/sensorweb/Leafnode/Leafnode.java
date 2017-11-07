@@ -12,6 +12,8 @@ public class Leafnode {
 
     private Long homenodeId;
 
+    private Long leafnodeId;
+
     private float latitude;
 
     private float longitude;
@@ -30,7 +32,8 @@ public class Leafnode {
 
     }
 
-    public Leafnode(Long homenodeId, float latitude, float longitude, boolean isActive) {
+    public Leafnode(Long homenodeId, Long leafnodeId) {
+        this.leafnodeId = leafnodeId;
         this.homenodeId = homenodeId;
         this.latitude = latitude;
         this.longitude = longitude;
@@ -43,6 +46,14 @@ public class Leafnode {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getLeafnodeId() {
+        return leafnodeId;
+    }
+
+    public void setLeafnodeId(Long leafnodeId) {
+        this.leafnodeId = leafnodeId;
     }
 
     public Long getHomenodeId() {

@@ -31,9 +31,8 @@ public class Homenode {
 
     }
 
-    public Homenode(String uniqueId, float longitude, boolean isActive) {
+    public Homenode(String uniqueId, boolean isActive) {
         this.uniqueId = uniqueId;
-        this.longitude = longitude;
         this.isActive = isActive;
     }
 

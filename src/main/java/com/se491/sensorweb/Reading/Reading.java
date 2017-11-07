@@ -15,7 +15,7 @@ public class Reading {
 
     private Long datatypeId;
 
-    private String value;
+    private Double value;
 
     private boolean isActive;
 
@@ -31,7 +31,7 @@ public class Reading {
 
     }
 
-    public Reading(Long leafnodeId, Long datatypeId, String value, boolean isActive) {
+    public Reading(Long leafnodeId, Long datatypeId, Double value, boolean isActive) {
         this.leafnodeId = leafnodeId;
         this.datatypeId = datatypeId;
         this.value = value;
@@ -63,11 +63,11 @@ public class Reading {
         this.datatypeId = datatypeId;
     }
 
-    public String getValue() {
+    public Double getValue() {
         return value;
     }
 
-    public void setValue(String value) {
+    public void setValue(Double value) {
         this.value = value;
     }
 

@@ -5,16 +5,16 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class NodeDataDto {
 
     @JsonProperty("id")
-    private int nodeId;
+    private Long nodeId;
     @JsonProperty("value")
     private double sensorReading;
 
-    public int getNodeId() {
+    public Long getNodeId() {
         return nodeId;
     }
 
 
-    public void setNodeId(int nodeId) {
+    public void setNodeId(Long nodeId) {
         this.nodeId = nodeId;
     }
 

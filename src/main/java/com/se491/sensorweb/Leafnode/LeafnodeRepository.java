@@ -6,4 +6,5 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface LeafnodeRepository extends CrudRepository<Leafnode, Long> {
 
+    Leafnode findByLeafnodeIdAndHomenodeId(Long leafnodeId, Long homenodeId);
 }
