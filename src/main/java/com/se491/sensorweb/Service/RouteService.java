@@ -55,7 +55,7 @@ public class RouteService {
         coordinates.add(new Point2D.Float(3,5));
         coordinates.add(new Point2D.Float(4,5));
         coordinates.add(new Point2D.Float(5,5));
-        coordinates.add(new Point2D.Float(6,6));
+        coordinates.add(new Point2D.Float(4,6));
 
         int[][] toReturn = {{1,2,3,4,3,4,6,2,3,4,5,6,3,5,6,2,3,4,5,6},
                             {1,1,1,1,2,2,2,3,3,3,3,3,4,4,4,5,5,5,5,6}};
@@ -138,6 +138,14 @@ public class RouteService {
             }
         }
         return adjacencyMatrix;
+    }
+
+    private static Integer[] pathReconstruction(int[][] processedMatrix){
+        ArrayList<Integer> reconstructedPath = new ArrayList<>();
+
+
+
+        return reconstructedPath.toArray(new Integer[reconstructedPath.size()]);
     }
 
     //debug code, don't want to delete it in case i come back.
