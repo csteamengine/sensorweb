@@ -3,18 +3,14 @@ package com.se491.sensorweb.Controller;
 import com.se491.sensorweb.Leafnode.Leafnode;
 import com.se491.sensorweb.Reading.Reading;
 import com.se491.sensorweb.Service.*;
-import com.se491.sensorweb.dto.NodeDataDto;
+import com.se491.sensorweb.DTO.NodeDataDto;
 import com.se491.sensorweb.Entity.EchoRequest;
 import com.se491.sensorweb.Homenode.Homenode;
 import com.se491.sensorweb.error.Error;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.xml.soap.Node;
-import javax.xml.ws.Response;
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController

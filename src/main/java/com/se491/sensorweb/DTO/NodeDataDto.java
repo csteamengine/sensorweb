@@ -1,4 +1,4 @@
-package com.se491.sensorweb.dto;
+package com.se491.sensorweb.DTO;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

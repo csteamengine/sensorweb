@@ -7,6 +7,6 @@ public class RouteService {
 
     public int[] getPathToDestination(int destination){
 
-        return new int[]{5, 3, 2, 4, 1};
+        return new int[]{0,1,2};
     }
 }
