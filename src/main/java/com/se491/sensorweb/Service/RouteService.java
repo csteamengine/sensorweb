@@ -78,12 +78,14 @@ public class RouteService {
                     }else {
                         distanceThroughK = adjacencyMatrix[i][k] + adjacencyMatrix[k][j];
                     }
+
                     adjacencyMatrix[i][j] = Math.min(distanceThroughK, adjacencyMatrix[i][j]);
                 }
             }
 
         }
         printMatrix(adjacencyMatrix);
+        printMatrix(pathReconstruction(adjacencyMatrix));
 
         //Calculate center node
         int longestTime;
@@ -140,12 +142,20 @@ public class RouteService {
         return adjacencyMatrix;
     }
 
-    private static Integer[] pathReconstruction(int[][] processedMatrix){
-        ArrayList<Integer> reconstructedPath = new ArrayList<>();
+    private static int[][] pathReconstruction(int[][] processedMatrix){
+        int[][] pathMatrix = new int[processedMatrix.length][processedMatrix.length];
 
+        for(int i=0; i < processedMatrix.length; i++){
+            for(int j=0; j < processedMatrix.length; j++){
+                for(int k=0; k < processedMatrix.length; k++){
+                    if(processedMatrix[i][j] + processedMatrix[j][k] < processedMatrix[i][k]){
+                        pathMatrix[j][k] = processedMatrix[i][k];
+                    }
+                }
+            }
+        }
 
-
-        return reconstructedPath.toArray(new Integer[reconstructedPath.size()]);
+        return pathMatrix;
     }
 
     //debug code, don't want to delete it in case i come back.
